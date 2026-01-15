@@ -8,7 +8,7 @@
 	Height="450" Width="800"
 	WindowState="Minimized"
 	WindowStartupLocation="CenterScreen"
-	Title="Автомастерская" Loaded="Window_Loaded" >
+	Title="Автомастерская" Loaded="Window_Loaded" Closing="Window_Closing" >
 	<StackPanel>
 		<Menu>
 			<MenuItem 

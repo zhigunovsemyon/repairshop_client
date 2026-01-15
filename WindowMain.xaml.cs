@@ -11,6 +11,8 @@ public partial class WindowMain : Window
 	private string login = "";
 	private string password = "";
 
+	private RepairshopContext? dbContext = null;
+
 	private string connString => $"Host={hostname};Username={login};Password={password};Database=repairshop";
 
 	public WindowMain() => this.InitializeComponent();
@@ -25,7 +27,20 @@ public partial class WindowMain : Window
 		}
 	}
 
-	private bool VerifyConnectionData()
+	private bool RefreshDbContext()
+	{
+		var newDbContext = new RepairshopContext(this.connString);
+		if (!newDbContext.Database.CanConnect()) {
+			newDbContext.Dispose();
+			return false;
+		}
+
+		this.dbContext?.Dispose();
+		this.dbContext = newDbContext;
+		return true;
+	}
+
+	private bool Reconnect()
 	{
 		if (String.IsNullOrWhiteSpace(this.login)) {
 			return false;
@@ -33,7 +48,8 @@ public partial class WindowMain : Window
 		if (String.IsNullOrWhiteSpace(this.hostname)) {
 			this.hostname = "localhost";
 		}
-		return true;
+
+		return RefreshDbContext();
 	}
 
 	private bool Auth()
@@ -47,13 +63,12 @@ public partial class WindowMain : Window
 		this.login = windowLogin.Login;
 		this.password = windowLogin.Password;
 
-		if (this.VerifyConnectionData()) {
+		if (this.Reconnect()) {
 			this.Tabs.IsEnabled = true;
-			MessageBox.Show($"windowLogin true:{this.hostname}\r\n{this.login} {this.password}");
 			return true;
 		}
 		else {
-			MessageBox.Show("windowLogin false");
+			MessageBox.Show("Не удалось подключиться с введёнными данными!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
 			this.Tabs.IsEnabled = false;
 			return false;
 		}
@@ -62,5 +77,10 @@ public partial class WindowMain : Window
 	private void ButtonAuthClick(object sender, RoutedEventArgs e) => this.Auth();
 
 	private void ButtonCloseClick(object sender, RoutedEventArgs e) => this.Close();
+
+	private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+	{
+		this.dbContext?.Dispose();
+	}
 }
 
