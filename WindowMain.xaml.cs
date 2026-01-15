@@ -14,7 +14,7 @@ public partial class WindowMain : Window
 	public WindowMain() => this.InitializeComponent();
 	private void Window_Loaded(object sender, RoutedEventArgs e)
 	{
-		if (this.Auth()) { 
+		if (this.Auth()) {
 			this.WindowState = WindowState.Normal;
 		}
 		else {
@@ -22,12 +22,31 @@ public partial class WindowMain : Window
 		}
 	}
 
-	private bool Auth ()
+	private bool VerifyConnectionData()
+	{
+		if (String.IsNullOrWhiteSpace(this.login)) {
+			return false;
+		}
+		if (String.IsNullOrWhiteSpace(this.hostname)) {
+			this.hostname = "localhost";
+		}
+		return true;
+	}
+
+	private bool Auth()
 	{
 		var windowLogin = new WindowLogin(hostname, login, password);
-		if (windowLogin.ShowDialog() ?? false) {
+		if (!(windowLogin.ShowDialog() ?? false)) {
+			return false;
+		}
+
+		this.hostname = windowLogin.Hostname;
+		this.login = windowLogin.Login;
+		this.password = windowLogin.Password;
+
+		if (this.VerifyConnectionData()) {
 			this.Tabs.IsEnabled = true;
-			MessageBox.Show($"windowLogin true:{windowLogin.Hostname}\r\n{windowLogin.Login} {windowLogin.Password}");
+			MessageBox.Show($"windowLogin true:{this.hostname}\r\n{this.login} {this.password}");
 			return true;
 		}
 		else {
