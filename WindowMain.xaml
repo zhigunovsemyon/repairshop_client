@@ -6,12 +6,24 @@
 	xmlns:local="clr-namespace:repairshop_client"
 	mc:Ignorable="d"
 	Height="450" Width="800"
-	Title="Автомастерская" >
+	WindowState="Minimized"
+	WindowStartupLocation="CenterScreen"
+	Title="Автомастерская" Loaded="Window_Loaded" >
 	<StackPanel>
-		<ToolBar >
-			<Button>Test</Button>
-		</ToolBar>
-		<TabControl>
+		<Menu>
+			<MenuItem 
+				Click="ButtonAuthClick"
+				Header="Авторизация" 
+			/>
+			<MenuItem 
+				Click="ButtonCloseClick"
+				Header="Выход" 
+			/>
+		</Menu>
+		<TabControl 
+			x:Name="Tabs"
+			IsEnabled="False"
+			>
 			<TabItem Header="Клиенты">
 				<Grid >
 				</Grid>
