@@ -37,6 +37,8 @@ public partial class WindowMain : Window
 
 		this.dbContext?.Dispose();
 		this.dbContext = newDbContext;
+
+		var x = this.dbContext.Services.ToList();
 		return true;
 	}
 

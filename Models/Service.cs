@@ -7,9 +7,12 @@ namespace repairshop_client.Models;
 public class Service
 {
 	[Key]
+	[Column("service_id")]
 	public Int16 SerivceId { get; set; }
 
+	[Column("name")]
 	public string Name { get; set; }
 
+	[Column("price")]
 	public Int32 Price { get; set; }
 }

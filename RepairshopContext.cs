@@ -25,4 +25,9 @@ public class RepairshopContext : DbContext
 	{
 		optionsBuilder.UseNpgsql(connectionString);
 	}
+
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
+	{
+		modelBuilder.HasDefaultSchema("repairshop");
+	}
 }
