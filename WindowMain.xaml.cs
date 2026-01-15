@@ -11,7 +11,10 @@ public partial class WindowMain : Window
 	private string login = "";
 	private string password = "";
 
+	private string connString => $"Host={hostname};Username={login};Password={password};Database=repairshop";
+
 	public WindowMain() => this.InitializeComponent();
+
 	private void Window_Loaded(object sender, RoutedEventArgs e)
 	{
 		if (this.Auth()) {
@@ -58,10 +61,6 @@ public partial class WindowMain : Window
 
 	private void ButtonAuthClick(object sender, RoutedEventArgs e) => this.Auth();
 
-	private void ButtonCloseClick(object sender, RoutedEventArgs e)
-	{
-		this.Close();
-	}
-
+	private void ButtonCloseClick(object sender, RoutedEventArgs e) => this.Close();
 }
 
