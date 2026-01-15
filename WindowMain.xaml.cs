@@ -10,21 +10,18 @@ public partial class WindowMain : Window
 	private string hostname = "localhost";
 	private string login = "";
 	private string password = "";
+	private string port = "5432";
 
 	private RepairshopContext? dbContext = null;
 
-	private string connString => $"Host={hostname};Username={login};Password={password};Database=repairshop";
+	private string connString => $"Host={hostname};Username={login};Password={password};Database=repairshop;Port={port}";
 
 	public WindowMain() => this.InitializeComponent();
 
 	private void Window_Loaded(object sender, RoutedEventArgs e)
 	{
-		if (this.Auth()) {
-			this.WindowState = WindowState.Normal;
-		}
-		else {
-			this.Close();
-		}
+		this.Auth();
+		this.WindowState = WindowState.Normal;
 	}
 
 	private bool RefreshDbContext()
@@ -55,12 +52,13 @@ public partial class WindowMain : Window
 
 	private bool Auth()
 	{
-		var windowLogin = new WindowLogin(hostname, login, password);
+		var windowLogin = new WindowLogin(hostname, port, login, password);
 		if (!(windowLogin.ShowDialog() ?? false)) {
 			return false;
 		}
 
 		this.hostname = windowLogin.Hostname;
+		this.port = windowLogin.Port;
 		this.login = windowLogin.Login;
 		this.password = windowLogin.Password;
 

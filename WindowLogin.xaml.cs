@@ -18,10 +18,13 @@ public partial class WindowLogin : Window
 
 	public string Password => this.PasswordBox.Password;
 
-	public WindowLogin(string hostname, string login, string password)
+	public string Port => this.TextBoxPort.Text;
+
+	public WindowLogin(string hostname, string port, string login, string password)
 	{
 		InitializeComponent();
 		this.TextBoxHostname.Text = hostname;
+		this.TextBoxPort.Text = port;
 		this.TextBoxLogin.Text = login;
 		this.PasswordBox.Password = password;
 	}

@@ -7,8 +7,8 @@
 	mc:Ignorable="d"
 	FontSize="16"
 	Title="Авторизация" 
-	Height="256" Width="320"
-	MinHeight="256" MinWidth="320"
+	Height="300" Width="340"
+	MinHeight="300" MinWidth="340"
 	>
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -21,6 +21,8 @@
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="8"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
 			<RowDefinition Height="auto"/>
 			<RowDefinition Height="auto"/>
 			<RowDefinition Height="auto"/>
@@ -41,44 +43,53 @@
 			Grid.ColumnSpan="4"
 			x:Name="TextBoxHostname"
 		/>
-
 		<Label 
-			Content="Имя пользователя"
+			Content="Порт"
 			Grid.Column="1" Grid.Row="3"
-			MinWidth="1"
 		/>
 		<TextBox 
 			Grid.Column="1" Grid.Row="4"
+			Grid.ColumnSpan="4"
+			x:Name="TextBoxPort"
+		/>
+
+		<Label 
+			Content="Имя пользователя"
+			Grid.Column="1" Grid.Row="5"
+			MinWidth="1"
+		/>
+		<TextBox 
+			Grid.Column="1" Grid.Row="6"
 			Grid.ColumnSpan="4"
 			x:Name="TextBoxLogin"
 		/>
 
 		<Label 
 			Content="Пароль"
-			Grid.Column="1" Grid.Row="5"
+			Grid.Column="1" Grid.Row="7"
 		/>
 		<PasswordBox
-			Grid.Column="1" Grid.Row="6"
+			Grid.Column="1" Grid.Row="8"
 			Grid.ColumnSpan="4"
 			x:Name="PasswordBox"
 		/>
 
 		<Button 
 			Grid.Column="4"
-			Grid.Row="8"
+			Grid.Row="10"
 			Margin="4 4 0 4"
 			IsDefault="True"
 			Content="OK"
 			Click="ButtonOK_Click"
-			MinWidth="64px"
+			MinWidth="74px"
 		/>
 		<Button 
 			Margin="0 4 4 4"
 			Grid.Column="3"
-			Grid.Row="8"
+			Grid.Row="10"
 			Content="Отмена" 
 			IsCancel="True"
-			MinWidth="64px"
+			MinWidth="74px"
 		/>
 
 	</Grid>
