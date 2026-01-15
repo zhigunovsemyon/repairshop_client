@@ -38,7 +38,6 @@ public partial class WindowMain : Window
 		this.dbContext?.Dispose();
 		this.dbContext = newDbContext;
 
-		var x = this.dbContext.Services.ToList();
 		return true;
 	}
 
@@ -83,6 +82,11 @@ public partial class WindowMain : Window
 	private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 	{
 		this.dbContext?.Dispose();
+	}
+
+	private void ButtonSaveClick(object sender, RoutedEventArgs e)
+	{
+		
 	}
 }
 

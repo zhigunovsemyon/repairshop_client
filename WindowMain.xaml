@@ -16,6 +16,11 @@
 				Header="Авторизация" 
 			/>
 			<MenuItem 
+				Click="ButtonSaveClick"
+				Header="Сохранить"
+				IsEnabled="False"
+			/>
+			<MenuItem 
 				Click="ButtonCloseClick"
 				Header="Выход" 
 			/>
