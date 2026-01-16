@@ -10,8 +10,12 @@
 	WindowStartupLocation="CenterScreen"
 	d:DataContext="{d:DesignInstance Type=local:WindowMainViewModel}"
 	Title="Автомастерская" Loaded="Window_Loaded" Closing="Window_Closing" >
-	<StackPanel>
-		<Menu>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<Menu Grid.Row="0">
 			<MenuItem 
 				Click="ButtonAuthClick"
 				Header="Авторизация" 
@@ -27,20 +31,26 @@
 			/>
 		</Menu>
 		<TabControl 
+			Grid.Row="1"
 			x:Name="Tabs"
-			IsEnabled="False"
+			IsEnabled="False" VerticalContentAlignment="Stretch"
 			>
 			<TabItem Header="Клиенты">
 				<DataGrid
 					AutoGenerateColumns="True"
-					ItemsSource="{Binding Clients}">
-				</DataGrid>
+					EnableRowVirtualization="True"
+					ItemsSource="{Binding Clients}" 
+				/>
 			</TabItem>
 			<TabItem Header="Механики">
 				<Grid />
 			</TabItem>
 			<TabItem Header="Услуги">
-				<Grid/>
+				<DataGrid
+					EnableRowVirtualization="True"
+					AutoGenerateColumns="True"
+					ItemsSource="{Binding Services}" 
+				/>
 			</TabItem>
 			<TabItem Header="Машины">
 				<Grid/>
@@ -49,5 +59,5 @@
 				<Grid/>
 			</TabItem>
 		</TabControl>
-	</StackPanel>
+	</Grid>
 </Window>
