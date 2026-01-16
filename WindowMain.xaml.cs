@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 
 namespace repairshop_client;
 
@@ -7,84 +8,44 @@ namespace repairshop_client;
 /// </summary>
 public partial class WindowMain : Window
 {
-	private string hostname = "localhost";
-	private string login = "";
-	private string password = "";
-	private string port = "5432";
+	private WindowMainViewModel viewModel
+		=> (WindowMainViewModel)(this.DataContext);
 
-	private RepairshopContext? dbContext = null;
 
-	private string connString => $"Host={hostname};Username={login};Password={password};Database=repairshop;Port={port}";
+	public WindowMain ()
+	{
+		this.InitializeComponent();
+		this.DataContext = new WindowMainViewModel();
+	}
 
-	public WindowMain() => this.InitializeComponent();
-
-	private void Window_Loaded(object sender, RoutedEventArgs e)
+	private void Window_Loaded (object sender, RoutedEventArgs e)
 	{
 		this.Auth();
 		this.WindowState = WindowState.Normal;
 	}
 
-	private bool RefreshDbContext()
+	private bool Auth ()
 	{
-		var newDbContext = new RepairshopContext(this.connString);
-		if (!newDbContext.Database.CanConnect()) {
-			newDbContext.Dispose();
-			return false;
-		}
-
-		this.dbContext?.Dispose();
-		this.dbContext = newDbContext;
-
-		return true;
-	}
-
-	private bool Reconnect()
-	{
-		if (String.IsNullOrWhiteSpace(this.login)) {
-			return false;
-		}
-		if (String.IsNullOrWhiteSpace(this.hostname)) {
-			this.hostname = "localhost";
-		}
-
-		return RefreshDbContext();
-	}
-
-	private bool Auth()
-	{
-		var windowLogin = new WindowLogin(hostname, port, login, password);
-		if (!(windowLogin.ShowDialog() ?? false)) {
-			return false;
-		}
-
-		this.hostname = windowLogin.Hostname;
-		this.port = windowLogin.Port;
-		this.login = windowLogin.Login;
-		this.password = windowLogin.Password;
-
-		if (this.Reconnect()) {
+		//todo: различать неудачный логин и отмену пользователя
+		if (this.viewModel.Auth()) {
 			this.Tabs.IsEnabled = true;
 			return true;
-		}
-		else {
+		} else {
 			MessageBox.Show("Не удалось подключиться с введёнными данными!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
 			this.Tabs.IsEnabled = false;
 			return false;
 		}
 	}
 
-	private void ButtonAuthClick(object sender, RoutedEventArgs e) => this.Auth();
+	private void ButtonAuthClick (object sender, RoutedEventArgs e) => this.Auth();
 
-	private void ButtonCloseClick(object sender, RoutedEventArgs e) => this.Close();
+	private void ButtonCloseClick (object sender, RoutedEventArgs e) => this.Close();
 
-	private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+	private void Window_Closing (object sender, CancelEventArgs e) => this.viewModel.Dispose();
+
+	private void ButtonSaveClick (object sender, RoutedEventArgs e)
 	{
-		this.dbContext?.Dispose();
-	}
 
-	private void ButtonSaveClick(object sender, RoutedEventArgs e)
-	{
-		
 	}
 }
 
