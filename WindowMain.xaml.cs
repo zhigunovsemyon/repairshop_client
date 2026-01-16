@@ -11,7 +11,6 @@ public partial class WindowMain : Window
 	private WindowMainViewModel viewModel
 		=> (WindowMainViewModel)(this.DataContext);
 
-
 	public WindowMain ()
 	{
 		this.InitializeComponent();

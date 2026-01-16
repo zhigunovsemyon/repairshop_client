@@ -8,6 +8,7 @@
 	Height="450" Width="800"
 	WindowState="Minimized"
 	WindowStartupLocation="CenterScreen"
+	d:DataContext="{d:DesignInstance Type=local:WindowMainViewModel}"
 	Title="Автомастерская" Loaded="Window_Loaded" Closing="Window_Closing" >
 	<StackPanel>
 		<Menu>
@@ -30,8 +31,10 @@
 			IsEnabled="False"
 			>
 			<TabItem Header="Клиенты">
-				<Grid >
-				</Grid>
+				<DataGrid
+					AutoGenerateColumns="True"
+					ItemsSource="{Binding Clients}">
+				</DataGrid>
 			</TabItem>
 			<TabItem Header="Механики">
 				<Grid />

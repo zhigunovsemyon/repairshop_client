@@ -1,6 +1,10 @@
-﻿namespace repairshop_client;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
+using System.Windows;
 
-public class WindowMainViewModel : IDisposable
+namespace repairshop_client;
+
+public class WindowMainViewModel : IDisposable 
 {
 	private string hostname = "localhost";
 	private string login = "";
@@ -8,6 +12,8 @@ public class WindowMainViewModel : IDisposable
 	private string port = "5432";
 
 	private RepairshopContext? dbContext = null;
+
+	public ObservableCollection<Models.Client> Clients { get; private set; } = [];
 
 	private string connString => $"Host={hostname};Username={login};Password={password};Database=repairshop;Port={port}";
 
@@ -22,7 +28,9 @@ public class WindowMainViewModel : IDisposable
 		this.dbContext?.Dispose();
 		this.dbContext = newDbContext;
 
-		var x = this.dbContext.Cars.ToList();
+		this.dbContext.Clients.Load();
+		this.Clients = this.dbContext.Clients.Local.ToObservableCollection();
+
 
 		return true;
 	}
@@ -38,8 +46,8 @@ public class WindowMainViewModel : IDisposable
 		this.port = windowLogin.Port;
 		this.login = windowLogin.Login;
 		this.password = windowLogin.Password;
-		this.hostname = String.IsNullOrWhiteSpace(windowLogin.Hostname) 
-			? "localhost" 
+		this.hostname = String.IsNullOrWhiteSpace(windowLogin.Hostname)
+			? "localhost"
 			: windowLogin.Hostname;
 
 		return this.RefreshDbContext();
