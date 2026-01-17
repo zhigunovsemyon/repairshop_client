@@ -44,7 +44,8 @@ public partial class WindowMain : Window
 
 	private void ButtonSaveClick (object sender, RoutedEventArgs e)
 	{
-
+		var changedItems = this.viewModel.Save();
+		MessageBox.Show($"Изменено {changedItems} записей!", "", MessageBoxButton.OK , MessageBoxImage.Information);
 	}
 }
 

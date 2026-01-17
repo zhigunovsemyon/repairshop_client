@@ -76,6 +76,8 @@ public class WindowMainViewModel : IDisposable
 		return this.RefreshConnection();
 	}
 
+	public int Save() => this.dbContext?.SaveChanges() ?? 0;
+
 	public void Dispose ()
 	{
 		//CA1816
