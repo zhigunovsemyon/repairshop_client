@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace repairshop_client.Models;
@@ -21,4 +22,9 @@ public class Mechanic
 
 	[Column("qualification")]
 	public Int16 Qualification { get; set; }
+
+	public virtual ICollection<Models.Repair> Repairs { get; private set; }
+		= new ObservableCollection<Models.Repair>();
+
+	public override string ToString () => $"{this.Surname} {this.Name}";
 }

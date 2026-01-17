@@ -12,12 +12,15 @@ public class Repair
 
 	[Column("car_id")]
 	public Int16 CarId { get; set; }
+	public virtual Models.Car Car { get; set; }
 
 	[Column("mechanic_id")]
 	public Int16 MechanicId { get; set; }
+	public virtual Models.Mechanic Mechanic { get; set; }
 
 	[Column("service_id")]
 	public Int16 ServiceId { get; set; }
+	public virtual Models.Service Service { get; set; }
 
 	[Column("date_start")]
 	public DateTime DateStart { get; set; }

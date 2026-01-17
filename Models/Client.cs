@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace repairshop_client.Models;
@@ -24,4 +25,9 @@ public class Client
 
 	[Column("phone")]
 	public Int64 Phone {  get; set; }
+
+	public virtual ICollection<Models.Car> Cars { get; private set; }
+		= new ObservableCollection<Models.Car>();
+
+	public override string ToString () => $"{this.Surname} {this.Name}";
 }

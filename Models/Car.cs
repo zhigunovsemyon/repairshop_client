@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace repairshop_client.Models;
@@ -24,4 +25,10 @@ public class Car
 
 	[Column("client_id")]
 	public Int16 ClientId { get; set; }
+	public virtual Models.Client Client { get; set; }
+
+	public virtual ICollection<Models.Repair> Repairs { get; private set; }
+		= new ObservableCollection<Models.Repair>();
+
+	public override string ToString () => $"{this.Brand} {this.Model} ({this.Plate})";
 }
