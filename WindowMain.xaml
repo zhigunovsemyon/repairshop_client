@@ -102,8 +102,9 @@
 						<DataGridTextColumn Header="Номер" Binding="{Binding Plate}" MaxWidth="80"/>
 						
 						<!--TODO: тормозное решение-->
+						<!--TODO: сортировка-->
 						<DataGridComboBoxColumn 
-							Header="test"
+							Header="Владелец"
 							ItemsSource="{Binding Source={StaticResource CollectionViewSourceClients}}"
 							SelectedValueBinding="{Binding Client}"
 							Width="*"

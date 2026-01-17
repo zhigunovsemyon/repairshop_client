@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.Windows;
 
 namespace repairshop_client;
@@ -44,8 +45,19 @@ public partial class WindowMain : Window
 
 	private void ButtonSaveClick (object sender, RoutedEventArgs e)
 	{
-		var changedItems = this.viewModel.Save();
-		MessageBox.Show($"Изменено {changedItems} записей!", "", MessageBoxButton.OK , MessageBoxImage.Information);
+		try {
+			var changedItems = this.viewModel.Save();
+			MessageBox.Show($"Изменено {changedItems} записей!", "", MessageBoxButton.OK, MessageBoxImage.Information);
+		}
+		catch (Exception? ex) {
+			string errMsg = "";
+			while (ex != null) {
+				errMsg += $"\r\n{ex.Message}";
+				ex = ex.InnerException;
+			}
+			MessageBox.Show($"Не удалось изменить записи! Ошибка:{errMsg}", "Ошибка", 
+				MessageBoxButton.OK, MessageBoxImage.Error);
+		}
 	}
 }
 
