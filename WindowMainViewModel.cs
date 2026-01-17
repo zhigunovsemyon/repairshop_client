@@ -17,6 +17,16 @@ public class WindowMainViewModel : IDisposable
 
 	private string connString => $"Host={hostname};Username={login};Password={password};Database=repairshop;Port={port}";
 
+	private static void ReloadCollection<T> (DbSet<T> dbSet, ObservableCollection<T> collection) where T : class
+	{
+		//todo: это сомнительное решение
+		dbSet.Load();
+		collection.Clear();
+		foreach (var item in dbSet.Local.ToList()) { 
+			collection.Add(item);
+		}
+	}
+
 	private bool RefreshDbContext ()
 	{
 		var newDbContext = new RepairshopContext(this.connString);
@@ -28,9 +38,7 @@ public class WindowMainViewModel : IDisposable
 		this.dbContext?.Dispose();
 		this.dbContext = newDbContext;
 
-		this.dbContext.Clients.Load();
-		this.Clients = this.dbContext.Clients.Local.ToObservableCollection();
-
+		ReloadCollection(this.dbContext.Clients, this.Clients);
 
 		return true;
 	}
