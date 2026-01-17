@@ -15,6 +15,7 @@
 			<Setter Property="CanUserResizeRows" Value="False"/>
 			<Setter Property="AlternatingRowBackground" Value="LightGray" />
 		</Style>
+		<CollectionViewSource x:Key="CollectionViewSourceClients" Source="{Binding Clients}" />
 	</Window.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
@@ -29,7 +30,6 @@
 			<MenuItem 
 				Click="ButtonSaveClick"
 				Header="Сохранить"
-				IsEnabled="False"
 			/>
 			<MenuItem 
 				Click="ButtonCloseClick"
@@ -45,7 +45,7 @@
 				<DataGrid
 					AutoGenerateColumns="False"
 					EnableRowVirtualization="True"
-					ItemsSource="{Binding Clients}" >
+					ItemsSource="{Binding Source={StaticResource CollectionViewSourceClients}}" >
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
 						<DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
@@ -88,6 +88,7 @@
 				</DataGrid>
 			</TabItem>
 			<TabItem Header="Машины">
+				
 				<DataGrid
 					EnableRowVirtualization="True"
 					AutoGenerateColumns="False"
@@ -100,8 +101,13 @@
 						<DataGridTextColumn Header="Год" Binding="{Binding Year}" MaxWidth="42"/>
 						<DataGridTextColumn Header="Номер" Binding="{Binding Plate}" MaxWidth="80"/>
 						
-						<!--TODO: комбобокс-->
-						<DataGridTextColumn Header="Владелец" Binding="{Binding Client}" Width="*"/>
+						<!--TODO: тормозное решение-->
+						<DataGridComboBoxColumn 
+							Header="test"
+							ItemsSource="{Binding Source={StaticResource CollectionViewSourceClients}}"
+							SelectedValueBinding="{Binding Client}"
+							Width="*"
+							/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</TabItem>
