@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
-using System.Windows;
+using System.Diagnostics;
 
 namespace repairshop_client;
 
@@ -14,6 +14,10 @@ public class WindowMainViewModel : IDisposable
 	private RepairshopContext? dbContext = null;
 
 	public ObservableCollection<Models.Client> Clients { get; private set; } = [];
+	public ObservableCollection<Models.Service> Services { get; private set; } = [];
+	public ObservableCollection<Models.Mechanic> Mechanics { get; private set; } = [];
+	public ObservableCollection<Models.Car> Cars { get; private set; } = [];
+	public ObservableCollection<Models.Repair> Repairs { get; private set; } = [];
 
 	private string connString => $"Host={hostname};Username={login};Password={password};Database=repairshop;Port={port}";
 
@@ -27,7 +31,18 @@ public class WindowMainViewModel : IDisposable
 		}
 	}
 
-	private bool RefreshDbContext ()
+	private void ReloadCollections()
+	{
+		Debug.Assert(this.dbContext != null);
+
+		WindowMainViewModel.ReloadCollection(this.dbContext.Clients, this.Clients);
+		WindowMainViewModel.ReloadCollection(this.dbContext.Services, this.Services);
+		WindowMainViewModel.ReloadCollection(this.dbContext.Mechanics, this.Mechanics);
+		WindowMainViewModel.ReloadCollection(this.dbContext.Repairs, this.Repairs);
+		WindowMainViewModel.ReloadCollection(this.dbContext.Cars, this.Cars);
+	}
+
+	private bool RefreshConnection ()
 	{
 		var newDbContext = new RepairshopContext(this.connString);
 		if (!newDbContext.Database.CanConnect()) {
@@ -38,7 +53,7 @@ public class WindowMainViewModel : IDisposable
 		this.dbContext?.Dispose();
 		this.dbContext = newDbContext;
 
-		ReloadCollection(this.dbContext.Clients, this.Clients);
+		ReloadCollections();
 
 		return true;
 	}
@@ -58,7 +73,7 @@ public class WindowMainViewModel : IDisposable
 			? "localhost"
 			: windowLogin.Hostname;
 
-		return this.RefreshDbContext();
+		return this.RefreshConnection();
 	}
 
 	public void Dispose ()

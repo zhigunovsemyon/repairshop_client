@@ -43,7 +43,11 @@
 				/>
 			</TabItem>
 			<TabItem Header="Механики">
-				<Grid />
+				<DataGrid 
+					AutoGenerateColumns="True"
+					EnableRowVirtualization="True"
+					ItemsSource="{Binding Mechanics}"
+				/>
 			</TabItem>
 			<TabItem Header="Услуги">
 				<DataGrid
@@ -53,10 +57,18 @@
 				/>
 			</TabItem>
 			<TabItem Header="Машины">
-				<Grid/>
+				<DataGrid
+					EnableRowVirtualization="True"
+					AutoGenerateColumns="True"
+					ItemsSource="{Binding Cars}" 
+				/>
 			</TabItem>
 			<TabItem Header="Ремонты">
-				<Grid/>
+				<DataGrid
+					EnableRowVirtualization="True"
+					AutoGenerateColumns="True"
+					ItemsSource="{Binding Repairs}" 
+				/>
 			</TabItem>
 		</TabControl>
 	</Grid>
