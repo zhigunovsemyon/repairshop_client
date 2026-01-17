@@ -9,7 +9,14 @@
 	WindowState="Minimized"
 	WindowStartupLocation="CenterScreen"
 	d:DataContext="{d:DesignInstance Type=local:WindowMainViewModel}"
+	Topmost="True"
 	Title="Автомастерская" Loaded="Window_Loaded" Closing="Window_Closing" >
+	<Window.Resources>
+		<Style TargetType="DataGrid">
+			<Setter Property="CanUserResizeRows" Value="False"/>
+			<Setter Property="AlternatingRowBackground" Value="LightGray" />
+		</Style>
+	</Window.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="auto" />
@@ -37,38 +44,75 @@
 			>
 			<TabItem Header="Клиенты">
 				<DataGrid
-					AutoGenerateColumns="True"
+					AutoGenerateColumns="False"
 					EnableRowVirtualization="True"
-					ItemsSource="{Binding Clients}" 
-				/>
+					ItemsSource="{Binding Clients}" >
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
+						<DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+						<DataGridTextColumn Header="Отчество" Binding="{Binding Patronim}"/>
+
+						<!--Должно быть числовое поле-->
+						<DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" MaxWidth="100"/>
+						<DataGridTextColumn Header="Почта" Binding="{Binding Email}" Width="*"/>
+					</DataGrid.Columns>
+				</DataGrid>
 			</TabItem>
 			<TabItem Header="Механики">
 				<DataGrid 
-					AutoGenerateColumns="True"
+					AutoGenerateColumns="False"
 					EnableRowVirtualization="True"
-					ItemsSource="{Binding Mechanics}"
-				/>
+					ItemsSource="{Binding Mechanics}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" Width="*"/>
+						<DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="*"/>
+						<DataGridTextColumn Header="Отчество" Binding="{Binding Patronim}" Width="*"/>
+
+						<!--Должно быть числовое поле-->
+						<DataGridTextColumn Header="Квалификация" Binding="{Binding Qualification}" MaxWidth="100"/>
+
+					</DataGrid.Columns>
+				</DataGrid>
 			</TabItem>
 			<TabItem Header="Услуги">
 				<DataGrid
 					EnableRowVirtualization="True"
-					AutoGenerateColumns="True"
-					ItemsSource="{Binding Services}" 
-				/>
+					AutoGenerateColumns="False"
+					ItemsSource="{Binding Services}" >
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Название услуги" Binding="{Binding Name}" Width="*"/>
+						<DataGridTextColumn Header="Стоимость" 
+							Binding="{Binding Price}" Width="100" MaxWidth="100"/>
+					</DataGrid.Columns>
+				</DataGrid>
 			</TabItem>
 			<TabItem Header="Машины">
 				<DataGrid
 					EnableRowVirtualization="True"
-					AutoGenerateColumns="True"
-					ItemsSource="{Binding Cars}" 
-				/>
+					AutoGenerateColumns="False"
+					ItemsSource="{Binding Cars}" >
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Производитель" Binding="{Binding Brand}"/>
+						<DataGridTextColumn Header="Модель" Binding="{Binding Model}"/>
+						<DataGridTextColumn Header="Год" Binding="{Binding Year}" MaxWidth="42"/>
+						<DataGridTextColumn Header="Номер" Binding="{Binding Plate}" MaxWidth="80"/>
+						<DataGridTextColumn Header="Владелец" Binding="{Binding Client}" Width="*"/>
+					</DataGrid.Columns>
+				</DataGrid>
 			</TabItem>
 			<TabItem Header="Ремонты">
 				<DataGrid
 					EnableRowVirtualization="True"
-					AutoGenerateColumns="True"
-					ItemsSource="{Binding Repairs}" 
-				/>
+					AutoGenerateColumns="False"
+					ItemsSource="{Binding Repairs}" >
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Машина" Binding="{Binding Car}"/>
+						<DataGridTextColumn Header="Механик" Binding="{Binding Mechanic}"/>
+						<DataGridTextColumn Header="Услуга" Binding="{Binding Service}"/>
+						<DataGridTextColumn Header="Дата начала" Binding="{Binding DateStart}"/>
+						<DataGridTextColumn Header="Дата окончания" Binding="{Binding DateEnd}"/>
+					</DataGrid.Columns>
+					</DataGrid>
 			</TabItem>
 		</TabControl>
 	</Grid>
