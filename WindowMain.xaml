@@ -9,6 +9,7 @@
 	WindowState="Minimized"
 	WindowStartupLocation="CenterScreen"
 	d:DataContext="{d:DesignInstance Type=local:WindowMainViewModel}"
+	Topmost="True"
 	Title="Автомастерская" Loaded="Window_Loaded" Closing="Window_Closing" >
 	<Window.Resources>
 		<Style TargetType="DataGrid">
@@ -102,13 +103,12 @@
 						<DataGridTextColumn Header="Номер" Binding="{Binding Plate}" MaxWidth="80"/>
 						
 						<!--TODO: тормозное решение-->
-						<!--TODO: сортировка-->
 						<DataGridComboBoxColumn 
 							Header="Владелец"
 							ItemsSource="{Binding Source={StaticResource CollectionViewSourceClients}}"
 							SelectedValueBinding="{Binding Client}"
-							Width="*"
-							/>
+							SortMemberPath="Client.Surname"
+							Width="*"/>
 					</DataGrid.Columns>
 				</DataGrid>
 			</TabItem>
