@@ -59,5 +59,12 @@ public partial class WindowMain : Window
 				MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 	}
+
+	private void ButtonDropClick (object sender, RoutedEventArgs e)
+	{
+		this.Tabs.IsEnabled = false;
+		this.viewModel.DropChanges();
+		this.Tabs.IsEnabled = true;
+	}
 }
 

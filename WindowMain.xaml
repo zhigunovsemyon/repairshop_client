@@ -36,6 +36,10 @@
 				Header="Сохранить"
 			/>
 			<MenuItem 
+				Click="ButtonDropClick"
+				Header="Сбросить изменения"
+			/>
+			<MenuItem 
 				Click="ButtonCloseClick"
 				Header="Выход" 
 			/>
