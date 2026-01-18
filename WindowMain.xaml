@@ -17,6 +17,9 @@
 			<Setter Property="AlternatingRowBackground" Value="LightGray" />
 		</Style>
 		<CollectionViewSource x:Key="CollectionViewSourceClients" Source="{Binding Clients}" />
+		<CollectionViewSource x:Key="CollectionViewSourceCars" Source="{Binding Cars}" />
+		<CollectionViewSource x:Key="CollectionViewSourceMechanics" Source="{Binding Mechanics}" />
+		<CollectionViewSource x:Key="CollectionViewSourceServices" Source="{Binding Services}" />
 	</Window.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
@@ -62,7 +65,7 @@
 				<DataGrid 
 					AutoGenerateColumns="False"
 					EnableRowVirtualization="True"
-					ItemsSource="{Binding Mechanics}">
+					ItemsSource="{Binding Source={StaticResource CollectionViewSourceMechanics}}">
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" Width="*"/>
 						<DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="*"/>
@@ -78,7 +81,7 @@
 				<DataGrid
 					EnableRowVirtualization="True"
 					AutoGenerateColumns="False"
-					ItemsSource="{Binding Services}" >
+					ItemsSource="{Binding Source={StaticResource CollectionViewSourceServices}}">
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Название услуги" Binding="{Binding Name}" Width="*"/>
 						
@@ -93,7 +96,7 @@
 				<DataGrid
 					EnableRowVirtualization="True"
 					AutoGenerateColumns="False"
-					ItemsSource="{Binding Cars}" >
+					ItemsSource="{Binding Source={StaticResource CollectionViewSourceCars}}" >
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Производитель" Binding="{Binding Brand}"/>
 						<DataGridTextColumn Header="Модель" Binding="{Binding Model}"/>
@@ -118,10 +121,24 @@
 					AutoGenerateColumns="False"
 					ItemsSource="{Binding Repairs}" >
 					<DataGrid.Columns>
-						<!--TODO: комбобоксы-->
-						<DataGridTextColumn Header="Машина" Binding="{Binding Car}"/>
-						<DataGridTextColumn Header="Механик" Binding="{Binding Mechanic}"/>
-						<DataGridTextColumn Header="Услуга" Binding="{Binding Service}"/>
+						<DataGridComboBoxColumn 
+							Header="Машина"
+							ItemsSource="{Binding Source={StaticResource CollectionViewSourceCars}}"
+							SelectedValueBinding="{Binding Car}"
+							SortMemberPath="Car.Brand"
+							Width="*"/>
+						<DataGridComboBoxColumn 
+							Header="Механик"
+							ItemsSource="{Binding Source={StaticResource CollectionViewSourceMechanics}}"
+							SelectedValueBinding="{Binding Mechanic}"
+							SortMemberPath="Mechanic.Surname"
+							Width="*"/>
+						<DataGridComboBoxColumn 
+							Header="Услуга"
+							ItemsSource="{Binding Source={StaticResource CollectionViewSourceServices}}"
+							SelectedValueBinding="{Binding Service}"
+							SortMemberPath="Service.Name"
+							Width="*"/>
 						
 						<!--TODO: календарики-->
 						<DataGridTextColumn Header="Дата начала" Binding="{Binding DateStart}"/>
