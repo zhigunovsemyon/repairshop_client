@@ -9,7 +9,7 @@
 	WindowState="Minimized"
 	WindowStartupLocation="CenterScreen"
 	d:DataContext="{d:DesignInstance Type=local:WindowMainViewModel}"
-	Topmost="True"
+	Language="ru-RU"
 	Title="Автомастерская" Loaded="Window_Loaded" Closing="Window_Closing" >
 	<Window.Resources>
 		<Style TargetType="DataGrid">
@@ -53,7 +53,7 @@
 				<DataGrid
 					AutoGenerateColumns="False"
 					EnableRowVirtualization="True"
-					ItemsSource="{Binding Source={StaticResource CollectionViewSourceClients}}" >
+					ItemsSource="{Binding Clients}" >
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
 						<DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
@@ -147,6 +147,23 @@
 						<!--TODO: календарики-->
 						<DataGridTextColumn Header="Дата начала" Binding="{Binding DateStart}"/>
 						<DataGridTextColumn Header="Дата окончания" Binding="{Binding DateEnd}"/>
+						
+						<!--Source - https://stackoverflow.com/a
+						<Posted by jimSampica
+						<Retrieved 2026-01-18, License - CC BY-SA 3.0-->
+						<!--<DataGridTemplateColumn Header="Pick a Date">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding DateEnd}" />
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+							<DataGridTemplateColumn.CellEditingTemplate>
+								<DataTemplate>
+									<DatePicker SelectedDate="{Binding DateEnd}" />
+								</DataTemplate>
+							</DataGridTemplateColumn.CellEditingTemplate>
+						</DataGridTemplateColumn>-->
+
 					</DataGrid.Columns>
 					</DataGrid>
 			</TabItem>
