@@ -9,13 +9,12 @@ namespace repairshop_client;
 /// </summary>
 public partial class WindowMain : Window
 {
-	private WindowMainViewModel viewModel
-		=> (WindowMainViewModel)(this.DataContext);
+	private WindowMainViewModel? ViewModel
+		=> this.DataContext as WindowMainViewModel;
 
 	public WindowMain ()
 	{
 		this.InitializeComponent();
-		this.DataContext = new WindowMainViewModel();
 	}
 
 	private void Window_Loaded (object sender, RoutedEventArgs e)
@@ -26,8 +25,11 @@ public partial class WindowMain : Window
 
 	private bool Auth ()
 	{
+		this.ViewModel?.Dispose();
+		this.DataContext = new WindowMainViewModel();
+
 		//todo: различать неудачный логин и отмену пользователя
-		if (this.viewModel.Auth()) {
+		if (this.ViewModel?.Auth() ?? false) {
 			this.Tabs.IsEnabled = true;
 			return true;
 		} else {
@@ -41,12 +43,12 @@ public partial class WindowMain : Window
 
 	private void ButtonCloseClick (object sender, RoutedEventArgs e) => this.Close();
 
-	private void Window_Closing (object sender, CancelEventArgs e) => this.viewModel.Dispose();
+	private void Window_Closing (object sender, CancelEventArgs e) => this.ViewModel?.Dispose();
 
 	private void ButtonSaveClick (object sender, RoutedEventArgs e)
 	{
 		try {
-			var changedItems = this.viewModel.Save();
+			var changedItems = this.ViewModel?.Save() ?? 0;
 			MessageBox.Show($"Изменено {changedItems} записей!", "", MessageBoxButton.OK, MessageBoxImage.Information);
 		}
 		catch (Exception? ex) {
@@ -63,7 +65,7 @@ public partial class WindowMain : Window
 	private void ButtonDropClick (object sender, RoutedEventArgs e)
 	{
 		this.Tabs.IsEnabled = false;
-		this.viewModel.DropChanges();
+		this.ViewModel?.DropChanges();
 		this.Tabs.IsEnabled = true;
 	}
 }
