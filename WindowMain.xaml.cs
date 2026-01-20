@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace repairshop_client;
 
@@ -85,5 +87,14 @@ public partial class WindowMain : Window
 	}
 
 	private void ButtonDropClick (object sender, RoutedEventArgs e) => this.RefreshConnection();
+
+	private void DataGrid_Loaded (object sender, RoutedEventArgs e)
+	{
+		var dg = sender as DataGrid;
+		Debug.Assert(dg is not null);
+
+		dg.SelectedIndex = dg.Items.Count - 1;
+		dg.ScrollIntoView(dg.Items[^1]);
+	}
 }
 

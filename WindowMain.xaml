@@ -53,6 +53,7 @@
 				<DataGrid
 					AutoGenerateColumns="False"
 					EnableRowVirtualization="True"
+					Loaded="DataGrid_Loaded"
 					ItemsSource="{Binding Clients}" >
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
@@ -68,6 +69,7 @@
 			<TabItem Header="Механики">
 				<DataGrid 
 					AutoGenerateColumns="False"
+					Loaded="DataGrid_Loaded"
 					EnableRowVirtualization="True"
 					ItemsSource="{Binding Source={StaticResource CollectionViewSourceMechanics}}">
 					<DataGrid.Columns>
@@ -84,6 +86,7 @@
 			<TabItem Header="Услуги">
 				<DataGrid
 					EnableRowVirtualization="True"
+					Loaded="DataGrid_Loaded"
 					AutoGenerateColumns="False"
 					ItemsSource="{Binding Source={StaticResource CollectionViewSourceServices}}">
 					<DataGrid.Columns>
@@ -98,6 +101,7 @@
 			<TabItem Header="Машины">
 				
 				<DataGrid
+					Loaded="DataGrid_Loaded"
 					EnableRowVirtualization="True"
 					AutoGenerateColumns="False"
 					ItemsSource="{Binding Source={StaticResource CollectionViewSourceCars}}" >
@@ -121,6 +125,7 @@
 			</TabItem>
 			<TabItem Header="Ремонты">
 				<DataGrid
+					Loaded="DataGrid_Loaded"
 					EnableRowVirtualization="True"
 					AutoGenerateColumns="False"
 					ItemsSource="{Binding Repairs}" >
