@@ -6,15 +6,7 @@ namespace repairshop_client;
 
 public class WindowMainViewModel : IDisposable
 {
-	private readonly string hostname;
-	private readonly string login;
-	private readonly string password;
-	private readonly string port;
-
-	private string ConnectionString => $"Host={hostname};Username={login};"
-		+ $"Password={password};Database=repairshop;Port={port}";
-
-	private RepairshopContext? dbContext = null;
+	private readonly RepairshopContext? dbContext; 
 
 	public ObservableCollection<Models.Client> Clients { get; private set; } = [];
 	public ObservableCollection<Models.Service> Services { get; private set; } = [];
@@ -43,33 +35,17 @@ public class WindowMainViewModel : IDisposable
 		WindowMainViewModel.ReloadCollection(this.dbContext.Cars, this.Cars);
 	}
 
-	private bool RefreshConnection ()
-	{
-		var newDbContext = new RepairshopContext(ConnectionString);
-		if (!newDbContext.Database.CanConnect()) {
-			newDbContext.Dispose();
-			return false;
-		}
-
-		this.dbContext?.Dispose();
-		this.dbContext = newDbContext;
-
-		ReloadCollections();
-
-		return true;
-	}
-
 	private WindowMainViewModel (string hostname, string port, string login, string password)
 	{
-		this.port = port;
-		this.login = login;
-		this.password = password;
-		this.hostname = hostname;
+		this.dbContext = new($"Host={hostname};Username={login};"
+			+ $"Password={password};Database=repairshop;Port={port}");
 
-		if (!this.RefreshConnection()) {
+		if (!this.dbContext.Database.CanConnect()) {
+			this.dbContext.Dispose();
 			//todo: свой класс исключений
 			throw new Exception("Unable to make new ViewModel");
 		}
+		ReloadCollections();
 	}
 
 	public static WindowMainViewModel? GetNewViewModel (string hostname, string port, string login, string password)
@@ -91,8 +67,6 @@ public class WindowMainViewModel : IDisposable
 
 	public int Save () => this.dbContext?.SaveChanges() ?? 0;
 
-	public void DropChanges () => this.RefreshConnection();
-
 	public void Dispose ()
 	{
 		//CA1816
@@ -105,7 +79,6 @@ public class WindowMainViewModel : IDisposable
 		//CA1816
 		if (disposing) {
 			this.dbContext?.Dispose();
-			this.dbContext = null;
 		}
 	}
 }
