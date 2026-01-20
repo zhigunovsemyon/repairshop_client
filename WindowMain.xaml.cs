@@ -31,7 +31,8 @@ public partial class WindowMain : Window
 		this.DataContext = null;
 		this.Tabs.IsEnabled = false;
 
-		var newModel = WindowMainViewModel.GetViewModel(windowLogin);
+		var newModel = WindowMainViewModel.GetNewViewModel(windowLogin.Hostname, 
+			windowLogin.Port, windowLogin.Login, windowLogin.Password);
 		if (newModel is null) {
 			MessageBox.Show("Не удалось подключиться с введёнными данными!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
 			return;

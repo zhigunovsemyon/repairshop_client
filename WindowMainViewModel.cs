@@ -59,14 +59,12 @@ public class WindowMainViewModel : IDisposable
 		return true;
 	}
 
-	private WindowMainViewModel (WindowLogin windowLogin)
+	private WindowMainViewModel (string hostname, string port, string login, string password)
 	{
-		this.port = windowLogin.Port;
-		this.login = windowLogin.Login;
-		this.password = windowLogin.Password;
-		this.hostname = String.IsNullOrWhiteSpace(windowLogin.Hostname)
-			? "localhost"
-			: windowLogin.Hostname;
+		this.port = port;
+		this.login = login;
+		this.password = password;
+		this.hostname = hostname;
 
 		if (!this.RefreshConnection()) {
 			//todo: свой класс исключений
@@ -74,10 +72,17 @@ public class WindowMainViewModel : IDisposable
 		}
 	}
 
-	public static WindowMainViewModel? GetViewModel (WindowLogin windowLogin)
+	public static WindowMainViewModel? GetNewViewModel (string hostname, string port, string login, string password)
 	{
 		try {
-			return new WindowMainViewModel(windowLogin);
+			return new WindowMainViewModel(
+				(String.IsNullOrWhiteSpace(hostname)
+					? "localhost"
+					: hostname),
+				port,
+				login,
+				password
+			);
 		}
 		catch (Exception) {
 			return null;
