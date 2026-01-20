@@ -4,12 +4,15 @@ using System.Diagnostics;
 
 namespace repairshop_client;
 
-public class WindowMainViewModel : IDisposable 
+public class WindowMainViewModel : IDisposable
 {
-	private string hostname = "localhost";
-	private string login = "";
-	private string password = "";
-	private string port = "5432";
+	private static string hostname = "localhost";
+	private static string login = "";
+	private static string password = "";
+	private static string port = "5432";
+
+	private static string ConnectionString => $"Host={hostname};Username={login};"
+		+ $"Password={password};Database=repairshop;Port={port}";
 
 	private RepairshopContext? dbContext = null;
 
@@ -19,19 +22,17 @@ public class WindowMainViewModel : IDisposable
 	public ObservableCollection<Models.Car> Cars { get; private set; } = [];
 	public ObservableCollection<Models.Repair> Repairs { get; private set; } = [];
 
-	private string connString => $"Host={hostname};Username={login};Password={password};Database=repairshop;Port={port}";
-
 	private static void ReloadCollection<T> (DbSet<T> dbSet, ObservableCollection<T> collection) where T : class
 	{
 		//todo: это сомнительное решение
 		dbSet.Load();
 		collection.Clear();
-		foreach (var item in dbSet.Local.ToList()) { 
+		foreach (var item in dbSet.Local.ToList()) {
 			collection.Add(item);
 		}
 	}
 
-	private void ReloadCollections()
+	private void ReloadCollections ()
 	{
 		Debug.Assert(this.dbContext != null);
 
@@ -44,7 +45,7 @@ public class WindowMainViewModel : IDisposable
 
 	private bool RefreshConnection ()
 	{
-		var newDbContext = new RepairshopContext(this.connString);
+		var newDbContext = new RepairshopContext(ConnectionString);
 		if (!newDbContext.Database.CanConnect()) {
 			newDbContext.Dispose();
 			return false;
@@ -66,19 +67,19 @@ public class WindowMainViewModel : IDisposable
 			return false;
 		}
 
-		this.port = windowLogin.Port;
-		this.login = windowLogin.Login;
-		this.password = windowLogin.Password;
-		this.hostname = String.IsNullOrWhiteSpace(windowLogin.Hostname)
+		WindowMainViewModel.port = windowLogin.Port;
+		WindowMainViewModel.login = windowLogin.Login;
+		WindowMainViewModel.password = windowLogin.Password;
+		WindowMainViewModel.hostname = String.IsNullOrWhiteSpace(windowLogin.Hostname)
 			? "localhost"
 			: windowLogin.Hostname;
 
 		return this.RefreshConnection();
 	}
 
-	public int Save() => this.dbContext?.SaveChanges() ?? 0;
+	public int Save () => this.dbContext?.SaveChanges() ?? 0;
 
-	public void DropChanges() => this.RefreshConnection();
+	public void DropChanges () => this.RefreshConnection();
 
 	public void Dispose ()
 	{
