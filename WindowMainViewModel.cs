@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace repairshop_client;
 
 public class WindowMainViewModel : IDisposable
 {
-	private readonly RepairshopContext? dbContext; 
+	private readonly RepairshopContext dbContext; 
 
 	public ObservableCollection<Models.Client> Clients { get; }
 	public ObservableCollection<Models.Service> Services { get; }
@@ -55,7 +54,7 @@ public class WindowMainViewModel : IDisposable
 		}
 	}
 
-	public int Save () => this.dbContext?.SaveChanges() ?? 0;
+	public int Save () => this.dbContext.SaveChanges();
 
 	public void Dispose ()
 	{
@@ -68,7 +67,7 @@ public class WindowMainViewModel : IDisposable
 	{
 		//CA1816
 		if (disposing) {
-			this.dbContext?.Dispose();
+			this.dbContext.Dispose();
 		}
 	}
 }
