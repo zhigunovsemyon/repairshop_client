@@ -6,12 +6,12 @@ namespace repairshop_client;
 
 public class WindowMainViewModel : IDisposable
 {
-	private static string hostname = "localhost";
-	private static string login = "";
-	private static string password = "";
-	private static string port = "5432";
+	private readonly string hostname;
+	private readonly string login;
+	private readonly string password;
+	private readonly string port;
 
-	private static string ConnectionString => $"Host={hostname};Username={login};"
+	private string ConnectionString => $"Host={hostname};Username={login};"
 		+ $"Password={password};Database=repairshop;Port={port}";
 
 	private RepairshopContext? dbContext = null;
@@ -59,22 +59,29 @@ public class WindowMainViewModel : IDisposable
 		return true;
 	}
 
-	public bool Auth ()
+	private WindowMainViewModel (WindowLogin windowLogin)
 	{
-		//todo: различать неудачный логин и отмену пользователя
-		var windowLogin = new WindowLogin(hostname, port, login, password);
-		if (!(windowLogin.ShowDialog() ?? false)) {
-			return false;
-		}
-
-		WindowMainViewModel.port = windowLogin.Port;
-		WindowMainViewModel.login = windowLogin.Login;
-		WindowMainViewModel.password = windowLogin.Password;
-		WindowMainViewModel.hostname = String.IsNullOrWhiteSpace(windowLogin.Hostname)
+		this.port = windowLogin.Port;
+		this.login = windowLogin.Login;
+		this.password = windowLogin.Password;
+		this.hostname = String.IsNullOrWhiteSpace(windowLogin.Hostname)
 			? "localhost"
 			: windowLogin.Hostname;
 
-		return this.RefreshConnection();
+		if (!this.RefreshConnection()) {
+			//todo: свой класс исключений
+			throw new Exception("Unable to make new ViewModel");
+		}
+	}
+
+	public static WindowMainViewModel? GetViewModel (WindowLogin windowLogin)
+	{
+		try {
+			return new WindowMainViewModel(windowLogin);
+		}
+		catch (Exception) {
+			return null;
+		}
 	}
 
 	public int Save () => this.dbContext?.SaveChanges() ?? 0;

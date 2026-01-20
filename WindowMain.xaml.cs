@@ -12,10 +12,7 @@ public partial class WindowMain : Window
 	private WindowMainViewModel? ViewModel
 		=> this.DataContext as WindowMainViewModel;
 
-	public WindowMain ()
-	{
-		this.InitializeComponent();
-	}
+	public WindowMain () =>this.InitializeComponent();
 
 	private void Window_Loaded (object sender, RoutedEventArgs e)
 	{
@@ -23,20 +20,25 @@ public partial class WindowMain : Window
 		this.WindowState = WindowState.Normal;
 	}
 
-	private bool Auth ()
+	private void Auth ()
 	{
-		this.ViewModel?.Dispose();
-		this.DataContext = new WindowMainViewModel();
-
-		//todo: различать неудачный логин и отмену пользователя
-		if (this.ViewModel?.Auth() ?? false) {
-			this.Tabs.IsEnabled = true;
-			return true;
-		} else {
-			MessageBox.Show("Не удалось подключиться с введёнными данными!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-			this.Tabs.IsEnabled = false;
-			return false;
+		var windowLogin = new WindowLogin("localhost", "5432", "", "");
+		if (!(windowLogin.ShowDialog() ?? false)) {
+			return;
 		}
+
+		this.ViewModel?.Dispose();
+		this.DataContext = null;
+		this.Tabs.IsEnabled = false;
+
+		var newModel = WindowMainViewModel.GetViewModel(windowLogin);
+		if (newModel is null) {
+			MessageBox.Show("Не удалось подключиться с введёнными данными!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+			return;
+		}
+
+		this.DataContext = newModel;
+		this.Tabs.IsEnabled = true;
 	}
 
 	private void ButtonAuthClick (object sender, RoutedEventArgs e) => this.Auth();
