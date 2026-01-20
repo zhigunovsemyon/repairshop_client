@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,8 +14,7 @@ public partial class WindowMain : Window
 	private string login = "";
 	private string password = "";
 
-	private WindowMainViewModel? ViewModel
-		=> this.DataContext as WindowMainViewModel;
+	private WindowMainViewModel? ViewModel => (WindowMainViewModel)this.DataContext;
 
 	public WindowMain () =>this.InitializeComponent();
 
@@ -90,8 +88,7 @@ public partial class WindowMain : Window
 
 	private void DataGrid_Loaded (object sender, RoutedEventArgs e)
 	{
-		var dg = sender as DataGrid;
-		Debug.Assert(dg is not null);
+		var dg = (DataGrid)sender;
 
 		dg.SelectedIndex = dg.Items.Count - 1;
 		dg.ScrollIntoView(dg.Items[^1]);
