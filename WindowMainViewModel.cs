@@ -8,32 +8,11 @@ public class WindowMainViewModel : IDisposable
 {
 	private readonly RepairshopContext? dbContext; 
 
-	public ObservableCollection<Models.Client> Clients { get; private set; } = [];
-	public ObservableCollection<Models.Service> Services { get; private set; } = [];
-	public ObservableCollection<Models.Mechanic> Mechanics { get; private set; } = [];
-	public ObservableCollection<Models.Car> Cars { get; private set; } = [];
-	public ObservableCollection<Models.Repair> Repairs { get; private set; } = [];
-
-	private static void ReloadCollection<T> (DbSet<T> dbSet, ObservableCollection<T> collection) where T : class
-	{
-		//todo: это сомнительное решение
-		dbSet.Load();
-		collection.Clear();
-		foreach (var item in dbSet.Local.ToList()) {
-			collection.Add(item);
-		}
-	}
-
-	private void ReloadCollections ()
-	{
-		Debug.Assert(this.dbContext != null);
-
-		WindowMainViewModel.ReloadCollection(this.dbContext.Clients, this.Clients);
-		WindowMainViewModel.ReloadCollection(this.dbContext.Services, this.Services);
-		WindowMainViewModel.ReloadCollection(this.dbContext.Mechanics, this.Mechanics);
-		WindowMainViewModel.ReloadCollection(this.dbContext.Repairs, this.Repairs);
-		WindowMainViewModel.ReloadCollection(this.dbContext.Cars, this.Cars);
-	}
+	public ObservableCollection<Models.Client> Clients { get; }
+	public ObservableCollection<Models.Service> Services { get; }
+	public ObservableCollection<Models.Mechanic> Mechanics { get;}
+	public ObservableCollection<Models.Car> Cars { get; }
+	public ObservableCollection<Models.Repair> Repairs { get; } 
 
 	private WindowMainViewModel (string hostname, string port, string login, string password)
 	{
@@ -45,7 +24,18 @@ public class WindowMainViewModel : IDisposable
 			//todo: свой класс исключений
 			throw new Exception("Unable to make new ViewModel");
 		}
-		ReloadCollections();
+
+		this.dbContext.Clients.Load();
+		this.dbContext.Cars.Load();
+		this.dbContext.Services.Load();
+		this.dbContext.Mechanics.Load();
+		this.dbContext.Repairs.Load();
+
+		this.Clients = this.dbContext.Clients.Local.ToObservableCollection();
+		this.Cars = this.dbContext.Cars.Local.ToObservableCollection();
+		this.Mechanics = this.dbContext.Mechanics.Local.ToObservableCollection();
+		this.Services = this.dbContext.Services.Local.ToObservableCollection();
+		this.Repairs = this.dbContext.Repairs.Local.ToObservableCollection();
 	}
 
 	public static WindowMainViewModel? GetNewViewModel (string hostname, string port, string login, string password)

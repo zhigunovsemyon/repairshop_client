@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 
 namespace repairshop_client;
@@ -41,9 +40,7 @@ public partial class WindowMain : Window
 
 	private void Auth ()
 	{
-		if (!this.ShowLoginScreen()) {
-			return;
-		} else {
+		if (this.ShowLoginScreen()) {
 			this.RefreshConnection();
 		}
 	}
