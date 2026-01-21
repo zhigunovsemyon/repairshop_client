@@ -57,7 +57,6 @@
 					ShowElapsedTime="True"
 					EnableRowVirtualization="True"
 					Loaded="DataGrid_Loaded"
-					PersistentFilter="True"
 					ItemsSource="{Binding Clients}" >
 					<fdg:FilterDataGrid.Columns>
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Фамилия" Binding="{Binding Surname}"/>
@@ -71,92 +70,105 @@
 				</fdg:FilterDataGrid>
 			</TabItem>
 			<TabItem Header="Механики">
-				<DataGrid 
+				<fdg:FilterDataGrid
 					AutoGenerateColumns="False"
+					ShowStatusBar="True"
+					ShowElapsedTime="True"
 					Loaded="DataGrid_Loaded"
 					EnableRowVirtualization="True"
 					ItemsSource="{Binding Source={StaticResource CollectionViewSourceMechanics}}">
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" Width="*"/>
-						<DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="*"/>
-						<DataGridTextColumn Header="Отчество" Binding="{Binding Patronim}" Width="*"/>
+					<fdg:FilterDataGrid.Columns>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Фамилия" Binding="{Binding Surname}" Width="*"/>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Имя" Binding="{Binding Name}" Width="*"/>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Отчество" Binding="{Binding Patronim}" Width="*"/>
 
 						<!--TODO: Должно быть числовое поле-->
-						<DataGridTextColumn Header="Квалификация" Binding="{Binding Qualification}" MaxWidth="100"/>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Квалификация" Binding="{Binding Qualification}" MaxWidth="100"/>
 
-					</DataGrid.Columns>
-				</DataGrid>
+					</fdg:FilterDataGrid.Columns>
+				</fdg:FilterDataGrid>
 			</TabItem>
 			<TabItem Header="Услуги">
-				<DataGrid
+				<fdg:FilterDataGrid
 					EnableRowVirtualization="True"
+					ShowStatusBar="True"
+					ShowElapsedTime="True"
 					Loaded="DataGrid_Loaded"
 					AutoGenerateColumns="False"
 					ItemsSource="{Binding Source={StaticResource CollectionViewSourceServices}}">
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="Название услуги" Binding="{Binding Name}" Width="*"/>
-						
+					<fdg:FilterDataGrid.Columns>
+						<fdg:DataGridTextColumn Header="Название услуги" IsColumnFiltered="True" 
+							Binding="{Binding Name}" Width="*"/>
+
 						<!--TODO: Должно быть числовое поле-->
-						<DataGridTextColumn Header="Стоимость" 
+						<fdg:DataGridTextColumn Header="Стоимость" IsColumnFiltered="True" 
 							Binding="{Binding Price}" Width="100" MaxWidth="100"/>
-					</DataGrid.Columns>
-				</DataGrid>
+					</fdg:FilterDataGrid.Columns>
+				</fdg:FilterDataGrid>
 			</TabItem>
 			<TabItem Header="Машины">
-				
-				<DataGrid
+
+				<fdg:FilterDataGrid
 					Loaded="DataGrid_Loaded"
+					ShowStatusBar="True"
+					ShowElapsedTime="True"
 					EnableRowVirtualization="True"
 					AutoGenerateColumns="False"
 					ItemsSource="{Binding Source={StaticResource CollectionViewSourceCars}}" >
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="Производитель" Binding="{Binding Brand}"/>
-						<DataGridTextColumn Header="Модель" Binding="{Binding Model}"/>
-						
+					<fdg:FilterDataGrid.Columns>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Производитель" Binding="{Binding Brand}"/>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Модель" Binding="{Binding Model}"/>
+
 						<!--TODO: Должно быть числовое поле-->
-						<DataGridTextColumn Header="Год" Binding="{Binding Year}" MaxWidth="42"/>
-						<DataGridTextColumn Header="Номер" Binding="{Binding Plate}" MaxWidth="80"/>
-						
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Год" Binding="{Binding Year}" MaxWidth="64"/>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Номер" Binding="{Binding Plate}" MaxWidth="90"/>
+
 						<!--TODO: тормозное решение-->
-						<DataGridComboBoxColumn 
+						<fdg:DataGridComboBoxColumn 
 							Header="Владелец"
+							IsColumnFiltered="True" 
 							ItemsSource="{Binding Source={StaticResource CollectionViewSourceClients}}"
 							SelectedValueBinding="{Binding Client}"
 							SortMemberPath="Client.Surname"
 							Width="*"/>
-					</DataGrid.Columns>
-				</DataGrid>
+					</fdg:FilterDataGrid.Columns>
+				</fdg:FilterDataGrid>
 			</TabItem>
 			<TabItem Header="Ремонты">
-				<DataGrid
+				<fdg:FilterDataGrid
 					Loaded="DataGrid_Loaded"
+					ShowStatusBar="True"
+					ShowElapsedTime="True"
 					EnableRowVirtualization="True"
 					AutoGenerateColumns="False"
 					ItemsSource="{Binding Repairs}" >
-					<DataGrid.Columns>
-						<DataGridComboBoxColumn 
+					<fdg:FilterDataGrid.Columns>
+						<fdg:DataGridComboBoxColumn 
 							Header="Машина"
 							ItemsSource="{Binding Source={StaticResource CollectionViewSourceCars}}"
 							SelectedValueBinding="{Binding Car}"
 							SortMemberPath="Car.Brand"
+							IsColumnFiltered="True" 
 							Width="*"/>
-						<DataGridComboBoxColumn 
+						<fdg:DataGridComboBoxColumn 
 							Header="Механик"
+							IsColumnFiltered="True" 
 							ItemsSource="{Binding Source={StaticResource CollectionViewSourceMechanics}}"
 							SelectedValueBinding="{Binding Mechanic}"
 							SortMemberPath="Mechanic.Surname"
 							Width="*"/>
-						<DataGridComboBoxColumn 
+						<fdg:DataGridComboBoxColumn 
 							Header="Услуга"
+							IsColumnFiltered="True" 
 							ItemsSource="{Binding Source={StaticResource CollectionViewSourceServices}}"
 							SelectedValueBinding="{Binding Service}"
 							SortMemberPath="Service.Name"
 							Width="*"/>
-						
+
 						<!--TODO: календарики-->
-						<DataGridTextColumn Header="Дата начала" Binding="{Binding DateStart}"/>
-						<DataGridTextColumn Header="Дата окончания" Binding="{Binding DateEnd}"/>
-						
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Дата начала" Binding="{Binding DateStart}"/>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Дата окончания" Binding="{Binding DateEnd}"/>
+
 						<!--Source - https://stackoverflow.com/a
 						<Posted by jimSampica
 						<Retrieved 2026-01-18, License - CC BY-SA 3.0-->
@@ -173,8 +185,8 @@
 							</DataGridTemplateColumn.CellEditingTemplate>
 						</DataGridTemplateColumn>-->
 
-					</DataGrid.Columns>
-					</DataGrid>
+					</fdg:FilterDataGrid.Columns>
+				</fdg:FilterDataGrid>
 			</TabItem>
 		</TabControl>
 	</Grid>
