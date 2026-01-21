@@ -4,6 +4,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="clr-namespace:repairshop_client"
+	xmlns:fdg="http://filterdatagrid.control.com/2021"  
 	mc:Ignorable="d"
 	Height="450" Width="800"
 	WindowState="Minimized"
@@ -50,21 +51,24 @@
 			IsEnabled="False" VerticalContentAlignment="Stretch"
 			>
 			<TabItem Header="Клиенты">
-				<DataGrid
+				<fdg:FilterDataGrid
 					AutoGenerateColumns="False"
+					ShowStatusBar="True"
+					ShowElapsedTime="True"
 					EnableRowVirtualization="True"
 					Loaded="DataGrid_Loaded"
+					PersistentFilter="True"
 					ItemsSource="{Binding Clients}" >
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
-						<DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
-						<DataGridTextColumn Header="Отчество" Binding="{Binding Patronim}"/>
+					<fdg:FilterDataGrid.Columns>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Фамилия" Binding="{Binding Surname}"/>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Имя" Binding="{Binding Name}"/>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Отчество" Binding="{Binding Patronim}"/>
 
 						<!--TODO: Должно быть числовое поле-->
-						<DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" MaxWidth="100"/>
-						<DataGridTextColumn Header="Почта" Binding="{Binding Email}" Width="*"/>
-					</DataGrid.Columns>
-				</DataGrid>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Телефон" Binding="{Binding Phone}" MaxWidth="100"/>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Почта" Binding="{Binding Email}" Width="*"/>
+					</fdg:FilterDataGrid.Columns>
+				</fdg:FilterDataGrid>
 			</TabItem>
 			<TabItem Header="Механики">
 				<DataGrid 
