@@ -13,14 +13,19 @@
 	Language="ru-RU"
 	Title="Автомастерская" Loaded="Window_Loaded" Closing="Window_Closing" >
 	<Window.Resources>
-		<Style TargetType="DataGrid">
-			<Setter Property="CanUserResizeRows" Value="False"/>
-			<Setter Property="AlternatingRowBackground" Value="LightGray" />
-		</Style>
 		<CollectionViewSource x:Key="CollectionViewSourceClients" Source="{Binding Clients}" />
 		<CollectionViewSource x:Key="CollectionViewSourceCars" Source="{Binding Cars}" />
 		<CollectionViewSource x:Key="CollectionViewSourceMechanics" Source="{Binding Mechanics}" />
 		<CollectionViewSource x:Key="CollectionViewSourceServices" Source="{Binding Services}" />
+		<Style x:Key="FDGStyle" TargetType="{x:Type fdg:FilterDataGrid}">
+			<Setter Property="CanUserResizeRows" Value="False"/>
+			<Setter Property="AlternatingRowBackground" Value="LightGray" />
+			<Setter Property="FilterLanguage" Value="Russian" />
+			<Setter Property="AutoGenerateColumns" Value="False" />
+			<Setter Property="ShowStatusBar" Value="True" />
+			<Setter Property="EnableRowVirtualization" Value="True" />
+			<Setter Property="DateFormatString" Value="D" />
+		</Style>
 	</Window.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
@@ -45,18 +50,15 @@
 				Header="Выход" 
 			/>
 		</Menu>
-		<TabControl 
+		<TabControl
 			Grid.Row="1"
 			x:Name="Tabs"
 			IsEnabled="False" VerticalContentAlignment="Stretch"
 			>
 			<TabItem Header="Клиенты">
 				<fdg:FilterDataGrid
-					AutoGenerateColumns="False"
-					ShowStatusBar="True"
-					ShowElapsedTime="True"
-					EnableRowVirtualization="True"
 					Loaded="DataGrid_Loaded"
+					Style="{StaticResource FDGStyle}"
 					ItemsSource="{Binding Clients}" >
 					<fdg:FilterDataGrid.Columns>
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Фамилия" Binding="{Binding Surname}"/>
@@ -71,12 +73,9 @@
 			</TabItem>
 			<TabItem Header="Механики">
 				<fdg:FilterDataGrid
-					AutoGenerateColumns="False"
-					ShowStatusBar="True"
-					ShowElapsedTime="True"
+					Style="{StaticResource FDGStyle}"
 					Loaded="DataGrid_Loaded"
-					EnableRowVirtualization="True"
-					ItemsSource="{Binding Source={StaticResource CollectionViewSourceMechanics}}">
+					ItemsSource="{Binding Mechanics}">
 					<fdg:FilterDataGrid.Columns>
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Фамилия" Binding="{Binding Surname}" Width="*"/>
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Имя" Binding="{Binding Name}" Width="*"/>
@@ -90,12 +89,9 @@
 			</TabItem>
 			<TabItem Header="Услуги">
 				<fdg:FilterDataGrid
-					EnableRowVirtualization="True"
-					ShowStatusBar="True"
-					ShowElapsedTime="True"
 					Loaded="DataGrid_Loaded"
-					AutoGenerateColumns="False"
-					ItemsSource="{Binding Source={StaticResource CollectionViewSourceServices}}">
+					Style="{StaticResource FDGStyle}"
+					ItemsSource="{Binding Services}">
 					<fdg:FilterDataGrid.Columns>
 						<fdg:DataGridTextColumn Header="Название услуги" IsColumnFiltered="True" 
 							Binding="{Binding Name}" Width="*"/>
@@ -107,14 +103,9 @@
 				</fdg:FilterDataGrid>
 			</TabItem>
 			<TabItem Header="Машины">
-
 				<fdg:FilterDataGrid
-					Loaded="DataGrid_Loaded"
-					ShowStatusBar="True"
-					ShowElapsedTime="True"
-					EnableRowVirtualization="True"
-					AutoGenerateColumns="False"
-					ItemsSource="{Binding Source={StaticResource CollectionViewSourceCars}}" >
+					Style="{StaticResource FDGStyle}"
+					ItemsSource="{Binding Cars}" >
 					<fdg:FilterDataGrid.Columns>
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Производитель" Binding="{Binding Brand}"/>
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Модель" Binding="{Binding Model}"/>
@@ -137,10 +128,7 @@
 			<TabItem Header="Ремонты">
 				<fdg:FilterDataGrid
 					Loaded="DataGrid_Loaded"
-					ShowStatusBar="True"
-					ShowElapsedTime="True"
-					EnableRowVirtualization="True"
-					AutoGenerateColumns="False"
+					Style="{StaticResource FDGStyle}"
 					ItemsSource="{Binding Repairs}" >
 					<fdg:FilterDataGrid.Columns>
 						<fdg:DataGridComboBoxColumn 
@@ -166,8 +154,10 @@
 							Width="*"/>
 
 						<!--TODO: календарики-->
-						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Дата начала" Binding="{Binding DateStart}"/>
-						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Дата окончания" Binding="{Binding DateEnd}"/>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" 
+							Header="Дата начала" Binding="{Binding DateStart}"/>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" 
+							Header="Дата окончания" Binding="{Binding DateEnd}"/>
 
 						<!--Source - https://stackoverflow.com/a
 						<Posted by jimSampica
