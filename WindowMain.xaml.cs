@@ -16,9 +16,9 @@ public partial class WindowMain : Window
 
 	private WindowMainViewModel? ViewModel => (WindowMainViewModel)this.DataContext;
 
-	public WindowMain () =>this.InitializeComponent();
+	public WindowMain() => this.InitializeComponent();
 
-	private void Window_Loaded (object sender, RoutedEventArgs e)
+	private void Window_Loaded(object sender, RoutedEventArgs e)
 	{
 		this.Auth();
 		this.WindowState = WindowState.Normal;
@@ -38,13 +38,13 @@ public partial class WindowMain : Window
 		return true;
 	}
 
-	private void Auth ()
+	private void Auth()
 	{
 		if (this.ShowLoginScreen()) {
 			this.RefreshConnection();
 		}
 	}
-	
+
 	private void RefreshConnection()
 	{
 		this.ViewModel?.Dispose();
@@ -61,13 +61,13 @@ public partial class WindowMain : Window
 		this.Tabs.IsEnabled = true;
 	}
 
-	private void ButtonAuthClick (object sender, RoutedEventArgs e) => this.Auth();
+	private void ButtonAuthClick(object sender, RoutedEventArgs e) => this.Auth();
 
-	private void ButtonCloseClick (object sender, RoutedEventArgs e) => this.Close();
+	private void ButtonCloseClick(object sender, RoutedEventArgs e) => this.Close();
 
-	private void Window_Closing (object sender, CancelEventArgs e) => this.ViewModel?.Dispose();
+	private void Window_Closing(object sender, CancelEventArgs e) => this.ViewModel?.Dispose();
 
-	private void ButtonSaveClick (object sender, RoutedEventArgs e)
+	private void ButtonSaveClick(object sender, RoutedEventArgs e)
 	{
 		try {
 			var changedItems = this.ViewModel?.Save() ?? 0;
@@ -79,19 +79,20 @@ public partial class WindowMain : Window
 				errMsg += $"\r\n{ex.Message}";
 				ex = ex.InnerException;
 			}
-			MessageBox.Show($"Не удалось изменить записи! Ошибка:{errMsg}", "Ошибка", 
+			MessageBox.Show($"Не удалось изменить записи! Ошибка:{errMsg}", "Ошибка",
 				MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 	}
 
-	private void ButtonDropClick (object sender, RoutedEventArgs e) => this.RefreshConnection();
+	private void ButtonDropClick(object sender, RoutedEventArgs e) => this.RefreshConnection();
 
-	private void DataGrid_Loaded (object sender, RoutedEventArgs e)
+	private void DataGrid_Loaded(object sender, RoutedEventArgs e)
 	{
 		var dg = (DataGrid)sender;
-
-		dg.SelectedIndex = dg.Items.Count - 1;
-		dg.ScrollIntoView(dg.Items[^1]);
+		if (dg.Items.Count > 0) {
+			dg.SelectedIndex = dg.Items.Count - 1;
+			dg.ScrollIntoView(dg.Items[^1] ?? 0);
+		}
 	}
 }
 
