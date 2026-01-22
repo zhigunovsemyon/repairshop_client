@@ -6,6 +6,8 @@ namespace repairshop_client.Models;
 [Table("repair")]
 public class Repair
 {
+	private DateOnly? _dateEnd;
+
 	[Key]
 	[Column("repair_id")]
 	public Int16 RepairId { get; set; }
@@ -26,5 +28,11 @@ public class Repair
 	public DateOnly DateStart { get; set; }
 
 	[Column("date_end")]
-	public DateOnly? DateEnd { get; set; }
+	public DateOnly? DateEnd 
+	{
+		get => this._dateEnd; 
+		set => this._dateEnd = (DateOnly.MinValue == value) 
+			? null
+			: value;
+	}
 }
