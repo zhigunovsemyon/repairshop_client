@@ -23,8 +23,8 @@ public class Repair
 	public virtual Models.Service Service { get; set; }
 
 	[Column("date_start")]
-	public DateTime DateStart { get; set; }
+	public DateOnly DateStart { get; set; }
 
 	[Column("date_end")]
-	public DateTime? DateEnd { get; set; }
+	public DateOnly? DateEnd { get; set; }
 }
