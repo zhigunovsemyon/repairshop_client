@@ -108,13 +108,35 @@
 						<fdg:DataGridNumericColumn IsColumnFiltered="True" Header="Номер" Binding="{Binding Plate}" MaxWidth="90"/>
 
 						<!--TODO: тормозное решение-->
-						<fdg:DataGridComboBoxColumn 
+						<!--<fdg:DataGridComboBoxColumn 
 							Header="Владелец"
 							IsColumnFiltered="True" 
 							ItemsSource="{Binding Source={StaticResource CollectionViewSourceClients}}"
 							SelectedValueBinding="{Binding Client}"
 							SortMemberPath="Client.Surname"
-							Width="*"/>
+							FieldName="Clients"
+							Width="*"/>-->
+						<fdg:DataGridTemplateColumn
+							Width="*"
+							Header="Владелец"
+							FieldName="Clients"
+							SortMemberPath="Client.Surname"
+							IsColumnFiltered="True">
+							<fdg:DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Client}" />
+								</DataTemplate>
+							</fdg:DataGridTemplateColumn.CellTemplate>
+							<fdg:DataGridTemplateColumn.CellEditingTemplate>
+								<DataTemplate>
+									<ComboBox 
+										BorderThickness="0"
+										ItemsSource="{Binding Source={StaticResource CollectionViewSourceClients}}"
+										SelectedValue="{Binding Client}"
+										/>
+								</DataTemplate>
+							</fdg:DataGridTemplateColumn.CellEditingTemplate>
+						</fdg:DataGridTemplateColumn>
 					</fdg:FilterDataGrid.Columns>
 				</fdg:FilterDataGrid>
 			</TabItem>
