@@ -1,16 +1,11 @@
 ﻿<Window x:Class="repairshop_client.WindowMain"
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:local="clr-namespace:repairshop_client"
-	xmlns:fdg="http://filterdatagrid.control.com/2021"  
-	mc:Ignorable="d"
-	Height="450" Width="800"
-	WindowState="Minimized"
-	WindowStartupLocation="CenterScreen"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:repairshop_client" xmlns:fdg="http://filterdatagrid.control.com/2021"  
 	d:DataContext="{d:DesignInstance Type=local:WindowMainViewModel}"
-	Language="ru-RU"
+	WindowState="Minimized" WindowStartupLocation="CenterScreen"
+	mc:Ignorable="d" Language="ru-RU"
+	Height="450" Width="800"
 	Title="Автомастерская" Loaded="Window_Loaded" Closing="Window_Closing" >
 	<Window.Resources>
 		<CollectionViewSource x:Key="CollectionViewSourceClients" Source="{Binding Clients}" />
@@ -18,6 +13,7 @@
 		<CollectionViewSource x:Key="CollectionViewSourceMechanics" Source="{Binding Mechanics}" />
 		<CollectionViewSource x:Key="CollectionViewSourceServices" Source="{Binding Services}" />
 		<Style x:Key="FDGStyle" TargetType="{x:Type fdg:FilterDataGrid}">
+			<Setter Property="ShowRowsCount" Value="True" />
 			<Setter Property="CanUserResizeRows" Value="False"/>
 			<Setter Property="AlternatingRowBackground" Value="LightGray" />
 			<Setter Property="FilterLanguage" Value="Russian" />
@@ -65,8 +61,7 @@
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Имя" Binding="{Binding Name}"/>
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Отчество" Binding="{Binding Patronim}"/>
 
-						<!--TODO: Должно быть числовое поле-->
-						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Телефон" Binding="{Binding Phone}" MaxWidth="100"/>
+						<fdg:DataGridNumericColumn IsColumnFiltered="True" Header="Телефон" Binding="{Binding Phone}" MaxWidth="100"/>
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Почта" Binding="{Binding Email}" Width="*"/>
 					</fdg:FilterDataGrid.Columns>
 				</fdg:FilterDataGrid>
@@ -81,8 +76,8 @@
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Имя" Binding="{Binding Name}" Width="*"/>
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Отчество" Binding="{Binding Patronim}" Width="*"/>
 
-						<!--TODO: Должно быть числовое поле-->
-						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Квалификация" Binding="{Binding Qualification}" MaxWidth="100"/>
+						<fdg:DataGridNumericColumn IsColumnFiltered="True" Header="Квалификация" 
+							Binding="{Binding Qualification}" MaxWidth="100"/>
 
 					</fdg:FilterDataGrid.Columns>
 				</fdg:FilterDataGrid>
@@ -96,8 +91,7 @@
 						<fdg:DataGridTextColumn Header="Название услуги" IsColumnFiltered="True" 
 							Binding="{Binding Name}" Width="*"/>
 
-						<!--TODO: Должно быть числовое поле-->
-						<fdg:DataGridTextColumn Header="Стоимость" IsColumnFiltered="True" 
+						<fdg:DataGridNumericColumn Header="Стоимость" IsColumnFiltered="True" 
 							Binding="{Binding Price}" Width="100" MaxWidth="100"/>
 					</fdg:FilterDataGrid.Columns>
 				</fdg:FilterDataGrid>
@@ -110,9 +104,8 @@
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Производитель" Binding="{Binding Brand}"/>
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Модель" Binding="{Binding Model}"/>
 
-						<!--TODO: Должно быть числовое поле-->
-						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Год" Binding="{Binding Year}" MaxWidth="64"/>
-						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Номер" Binding="{Binding Plate}" MaxWidth="90"/>
+						<fdg:DataGridNumericColumn IsColumnFiltered="True" Header="Год" Binding="{Binding Year}" MaxWidth="64"/>
+						<fdg:DataGridNumericColumn IsColumnFiltered="True" Header="Номер" Binding="{Binding Plate}" MaxWidth="90"/>
 
 						<!--TODO: тормозное решение-->
 						<fdg:DataGridComboBoxColumn 
@@ -150,6 +143,7 @@
 							IsColumnFiltered="True" 
 							ItemsSource="{Binding Source={StaticResource CollectionViewSourceServices}}"
 							SelectedValueBinding="{Binding Service}"
+							DisplayMemberPath="Name"
 							SortMemberPath="Service.Name"
 							Width="*"/>
 
