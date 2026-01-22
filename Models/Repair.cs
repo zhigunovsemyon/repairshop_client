@@ -6,7 +6,7 @@ namespace repairshop_client.Models;
 [Table("repair")]
 public class Repair
 {
-	private DateOnly? _dateEnd;
+	private DateTime? _dateEnd;
 
 	[Key]
 	[Column("repair_id")]
@@ -25,14 +25,23 @@ public class Repair
 	public virtual Models.Service Service { get; set; }
 
 	[Column("date_start")]
-	public DateOnly DateStart { get; set; }
+	public DateTime DateStart { get; set; }
 
 	[Column("date_end")]
-	public DateOnly? DateEnd 
+	public DateTime? DateEnd 
 	{
 		get => this._dateEnd; 
-		set => this._dateEnd = (DateOnly.MinValue == value) 
+		set => this._dateEnd = DateEndsetter(value);
+	}
+
+	private static DateTime? DateEndsetter (DateTime? val)
+	{
+		if (val is null) {
+			return null;
+		}
+		DateTime notNull = (DateTime)val;
+		return (DateTime.MinValue == val)
 			? null
-			: value;
+			: DateTime.SpecifyKind(notNull, DateTimeKind.Utc);
 	}
 }

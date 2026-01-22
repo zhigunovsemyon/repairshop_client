@@ -24,7 +24,7 @@
 			<Setter Property="AutoGenerateColumns" Value="False" />
 			<Setter Property="ShowStatusBar" Value="True" />
 			<Setter Property="EnableRowVirtualization" Value="True" />
-			<Setter Property="DateFormatString" Value="D" />
+			<Setter Property="DateFormatString" Value="d" />
 		</Style>
 	</Window.Resources>
 	<Grid>
@@ -156,8 +156,8 @@
 						<!--TODO: календарики-->
 						<fdg:DataGridTextColumn IsColumnFiltered="True" 
 							Header="Дата начала" Binding="{Binding DateStart}"/>
-						<fdg:DataGridTextColumn IsColumnFiltered="True" 
-							Header="Дата окончания" Binding="{Binding DateEnd}"/>
+						<fdg:DataGridTextColumn IsColumnFiltered="True"
+							Header="Дата окончания" Binding="{Binding DateEnd, TargetNullValue=''}"/>
 
 						<!--Source - https://stackoverflow.com/a
 						<Posted by jimSampica
