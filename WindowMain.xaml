@@ -104,7 +104,9 @@
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Производитель" Binding="{Binding Brand}"/>
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Модель" Binding="{Binding Model}"/>
 
-						<fdg:DataGridNumericColumn IsColumnFiltered="True" Header="Год" Binding="{Binding Year}" MaxWidth="64"/>
+						<!--TODO: Либо отказатся от нумерикколумна, либо что-то сделать с занулением-->
+						<fdg:DataGridNumericColumn IsColumnFiltered="True" Header="Год" 
+							Binding="{Binding Year, TargetNullValue=''}" MaxWidth="64"/>
 						<fdg:DataGridNumericColumn IsColumnFiltered="True" Header="Номер" Binding="{Binding Plate}" MaxWidth="90"/>
 
 						<!--TODO: тормозное решение-->
