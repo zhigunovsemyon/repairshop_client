@@ -99,15 +99,23 @@
 			<TabItem Header="Машины">
 				<fdg:FilterDataGrid
 					Style="{StaticResource FDGStyle}"
+					Loaded="DataGrid_Loaded"
 					ItemsSource="{Binding Cars}" >
 					<fdg:FilterDataGrid.Columns>
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Производитель" Binding="{Binding Brand}"/>
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Модель" Binding="{Binding Model}"/>
 
-						<!--TODO: Либо отказатся от нумерикколумна, либо что-то сделать с занулением-->
-						<fdg:DataGridNumericColumn IsColumnFiltered="True" Header="Год" 
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Год" 
 							Binding="{Binding Year, TargetNullValue=''}" MaxWidth="64"/>
-						<fdg:DataGridNumericColumn IsColumnFiltered="True" Header="Номер" Binding="{Binding Plate}" MaxWidth="90"/>
+						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Номер" Binding="{Binding Plate}" MaxWidth="90"/>
+
+						<!--<fdg:DataGridTextColumn
+							Header="Владелец"
+							IsColumnFiltered="True"
+							Binding="{Binding Client}"
+							SortMemberPath="Client.Surname"
+							FieldName="Clients"
+							Width="*"/>-->
 
 						<!--TODO: тормозное решение-->
 						<!--<fdg:DataGridComboBoxColumn 
