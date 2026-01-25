@@ -147,13 +147,28 @@
 							SortMemberPath="Car.Brand"
 							IsColumnFiltered="True" 
 							Width="*"/>
-						<fdg:DataGridComboBoxColumn 
+						<fdg:DataGridTemplateColumn 
 							Header="Механик"
-							IsColumnFiltered="True" 
-							ItemsSource="{Binding Source={StaticResource CollectionViewSourceMechanics}}"
-							SelectedValueBinding="{Binding Mechanic}"
-							SortMemberPath="Mechanic.Surname"
-							Width="*"/>
+							IsColumnFiltered="True"
+							FieldName="Mechanic.Surname"
+							Width="*"
+							SortMemberPath="Mechanic.Surname">
+
+							<fdg:DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Mechanic}" />
+								</DataTemplate>
+							</fdg:DataGridTemplateColumn.CellTemplate>
+							<fdg:DataGridTemplateColumn.CellEditingTemplate>
+								<DataTemplate>
+									<ComboBox 
+										BorderThickness="0"
+										ItemsSource="{Binding Source={StaticResource CollectionViewSourceMechanics}}"
+										SelectedItem="{Binding Mechanic}"
+										DisplayMemberPath="Surname" />
+								</DataTemplate>
+							</fdg:DataGridTemplateColumn.CellEditingTemplate>
+						</fdg:DataGridTemplateColumn>
 						<fdg:DataGridComboBoxColumn 
 							Header="Услуга"
 							IsColumnFiltered="True" 
