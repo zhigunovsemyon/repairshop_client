@@ -126,8 +126,7 @@
 									<ComboBox 
 										BorderThickness="0"
 										ItemsSource="{Binding Source={StaticResource CollectionViewSourceClients}}"
-										SelectedItem="{Binding Client}"
-										DisplayMemberPath="Surname" />
+										SelectedItem="{Binding Client}" />
 								</DataTemplate>
 							</fdg:DataGridTemplateColumn.CellEditingTemplate>
 						</fdg:DataGridTemplateColumn>
@@ -147,6 +146,7 @@
 							SortMemberPath="Car.Brand"
 							IsColumnFiltered="True" 
 							Width="*"/>
+
 						<fdg:DataGridTemplateColumn 
 							Header="Механик"
 							IsColumnFiltered="True"
@@ -164,19 +164,32 @@
 									<ComboBox 
 										BorderThickness="0"
 										ItemsSource="{Binding Source={StaticResource CollectionViewSourceMechanics}}"
-										SelectedItem="{Binding Mechanic}"
-										DisplayMemberPath="Surname" />
+										SelectedItem="{Binding Mechanic}" />
 								</DataTemplate>
 							</fdg:DataGridTemplateColumn.CellEditingTemplate>
 						</fdg:DataGridTemplateColumn>
-						<fdg:DataGridComboBoxColumn 
+
+						<fdg:DataGridTemplateColumn 
 							Header="Услуга"
-							IsColumnFiltered="True" 
-							ItemsSource="{Binding Source={StaticResource CollectionViewSourceServices}}"
-							SelectedValueBinding="{Binding Service}"
-							DisplayMemberPath="Name"
-							SortMemberPath="Service.Name"
-							Width="*"/>
+							IsColumnFiltered="True"
+							FieldName="Service.Name"
+							Width="*"
+							SortMemberPath="Service.Name">
+
+							<fdg:DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Service}" />
+								</DataTemplate>
+							</fdg:DataGridTemplateColumn.CellTemplate>
+							<fdg:DataGridTemplateColumn.CellEditingTemplate>
+								<DataTemplate>
+									<ComboBox 
+										BorderThickness="0"
+										ItemsSource="{Binding Source={StaticResource CollectionViewSourceServices}}"
+										SelectedItem="{Binding Service}" />
+								</DataTemplate>
+							</fdg:DataGridTemplateColumn.CellEditingTemplate>
+						</fdg:DataGridTemplateColumn>
 
 						<!--TODO: календарики-->
 						<fdg:DataGridTextColumn IsColumnFiltered="True" 
