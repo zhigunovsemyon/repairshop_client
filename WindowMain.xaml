@@ -109,29 +109,13 @@
 							Binding="{Binding Year, TargetNullValue=''}" MaxWidth="64"/>
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Номер" Binding="{Binding Plate}" MaxWidth="90"/>
 
-						<!--<fdg:DataGridTextColumn
+						<fdg:DataGridTemplateColumn 
 							Header="Владелец"
 							IsColumnFiltered="True"
-							Binding="{Binding Client}"
-							SortMemberPath="Client.Surname"
-							FieldName="Clients"
-							Width="*"/>-->
-
-						<!--TODO: тормозное решение-->
-						<!--<fdg:DataGridComboBoxColumn 
-							Header="Владелец"
-							IsColumnFiltered="True" 
-							ItemsSource="{Binding Source={StaticResource CollectionViewSourceClients}}"
-							SelectedValueBinding="{Binding Client}"
-							SortMemberPath="Client.Surname"
-							FieldName="Clients"
-							Width="*"/>-->
-						<fdg:DataGridTemplateColumn
+							FieldName="Client.Surname"
 							Width="*"
-							Header="Владелец"
-							FieldName="Clients"
-							SortMemberPath="Client.Surname"
-							IsColumnFiltered="True">
+							SortMemberPath="Client.Surname">
+
 							<fdg:DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
 									<TextBlock Text="{Binding Client}" />
@@ -142,8 +126,8 @@
 									<ComboBox 
 										BorderThickness="0"
 										ItemsSource="{Binding Source={StaticResource CollectionViewSourceClients}}"
-										SelectedValue="{Binding Client}"
-										/>
+										SelectedItem="{Binding Client}"
+										DisplayMemberPath="Surname" />
 								</DataTemplate>
 							</fdg:DataGridTemplateColumn.CellEditingTemplate>
 						</fdg:DataGridTemplateColumn>
