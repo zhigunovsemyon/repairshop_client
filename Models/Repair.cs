@@ -7,6 +7,7 @@ namespace repairshop_client.Models;
 public class Repair
 {
 	private DateTime? _dateEnd;
+	private DateTime _dateStart;
 
 	[Key]
 	[Column("repair_id")]
@@ -25,16 +26,20 @@ public class Repair
 	public virtual Models.Service Service { get; set; }
 
 	[Column("date_start")]
-	public DateTime DateStart { get; set; }
+	public DateTime DateStart
+	{
+		get => this._dateStart;
+		set => this._dateStart = DateTime.SpecifyKind(value, DateTimeKind.Utc);
+	}
 
 	[Column("date_end")]
-	public DateTime? DateEnd 
+	public DateTime? DateEnd
 	{
-		get => this._dateEnd; 
+		get => this._dateEnd;
 		set => this._dateEnd = DateEndsetter(value);
 	}
 
-	private static DateTime? DateEndsetter (DateTime? val)
+	private static DateTime? DateEndsetter(DateTime? val)
 	{
 		if (val is null) {
 			return null;
