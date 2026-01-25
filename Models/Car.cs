@@ -31,4 +31,7 @@ public class Car
 		= new ObservableCollection<Models.Repair>();
 
 	public override string ToString () => $"{this.Brand} {this.Model} ({this.Plate})";
+
+	[NotMapped]
+	public string String => this.ToString();
 }

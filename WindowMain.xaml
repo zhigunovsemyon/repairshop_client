@@ -139,21 +139,12 @@
 					Style="{StaticResource FDGStyle}"
 					ItemsSource="{Binding Repairs}" >
 					<fdg:FilterDataGrid.Columns>
-						<!--<fdg:DataGridComboBoxColumn 
-							Header="Машина"
-							ItemsSource="{Binding Source={StaticResource CollectionViewSourceCars}}"
-							SelectedValueBinding="{Binding Car}"
-							SortMemberPath="Car.Brand"
-							IsColumnFiltered="True" 
-							Width="*"/>-->
-
-						<!--TODO: фильтрация/поиск по модели и номерам-->
 						<fdg:DataGridTemplateColumn 
 							Header="Машина"
 							IsColumnFiltered="True"
-							FieldName="Car.Brand"
+							FieldName="Car.String"
 							Width="*"
-							SortMemberPath="Car.Brand">
+							SortMemberPath="Car.String">
 
 							<fdg:DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
