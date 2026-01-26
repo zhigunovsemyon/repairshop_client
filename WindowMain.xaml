@@ -22,6 +22,9 @@
 			<Setter Property="EnableRowVirtualization" Value="True" />
 			<Setter Property="DateFormatString" Value="d" />
 		</Style>
+		<Style TargetType="TabItem">
+			<Setter Property="Padding" Value="12 2" />
+		</Style>
 	</Window.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
@@ -49,7 +52,7 @@
 		<TabControl
 			Grid.Row="1"
 			x:Name="Tabs"
-			IsEnabled="False" VerticalContentAlignment="Stretch"
+			IsEnabled="False" 
 			>
 			<TabItem Header="Клиенты">
 				<fdg:FilterDataGrid
@@ -77,7 +80,7 @@
 						<fdg:DataGridTextColumn IsColumnFiltered="True" Header="Отчество" Binding="{Binding Patronim}" Width="*"/>
 
 						<fdg:DataGridNumericColumn IsColumnFiltered="True" Header="Квалификация" 
-							Binding="{Binding Qualification}" MaxWidth="100"/>
+							Binding="{Binding Qualification}" MaxWidth="120"/>
 
 					</fdg:FilterDataGrid.Columns>
 				</fdg:FilterDataGrid>
@@ -205,28 +208,10 @@
 							</fdg:DataGridTemplateColumn.CellEditingTemplate>
 						</fdg:DataGridTemplateColumn>
 
-						<!--TODO: календарики-->
 						<fdg:DataGridTextColumn IsColumnFiltered="True" 
 							Header="Дата начала" Binding="{Binding DateStart}"/>
 						<fdg:DataGridTextColumn IsColumnFiltered="True"
 							Header="Дата окончания" Binding="{Binding DateEnd, TargetNullValue=''}"/>
-
-						<!--Source - https://stackoverflow.com/a
-						<Posted by jimSampica
-						<Retrieved 2026-01-18, License - CC BY-SA 3.0-->
-						<!--<DataGridTemplateColumn Header="Pick a Date">
-							<DataGridTemplateColumn.CellTemplate>
-								<DataTemplate>
-									<TextBlock Text="{Binding DateEnd}" />
-								</DataTemplate>
-							</DataGridTemplateColumn.CellTemplate>
-							<DataGridTemplateColumn.CellEditingTemplate>
-								<DataTemplate>
-									<DatePicker SelectedDate="{Binding DateEnd}" />
-								</DataTemplate>
-							</DataGridTemplateColumn.CellEditingTemplate>
-						</DataGridTemplateColumn>-->
-
 					</fdg:FilterDataGrid.Columns>
 				</fdg:FilterDataGrid>
 			</TabItem>
