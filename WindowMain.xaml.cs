@@ -20,7 +20,7 @@ public partial class WindowMain : Window
 
 	private void Window_Loaded(object sender, RoutedEventArgs e)
 	{
-		this.Auth();
+		_ = this.Auth();
 		this.WindowState = WindowState.Normal;
 	}
 
@@ -38,20 +38,23 @@ public partial class WindowMain : Window
 		return true;
 	}
 
-	private void Auth()
+	private async Task Auth()
 	{
 		if (this.ShowLoginScreen()) {
-			this.RefreshConnection();
+			await this.RefreshConnection();
 		}
 	}
 
-	private void RefreshConnection()
+	private async Task RefreshConnection()
 	{
 		this.ViewModel?.Dispose();
 		this.DataContext = null;
 		this.Tabs.IsEnabled = false;
 
-		var newModel = WindowMainViewModel.GetNewViewModel(this.hostname, this.port, this.login, this.password);
+		var newModel = await Task.Run(() =>
+			WindowMainViewModel.GetNewViewModel(this.hostname, this.port, this.login, this.password)
+		);
+
 		if (newModel is null) {
 			MessageBox.Show("Не удалось подключиться с введёнными данными!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
 			return;
@@ -61,7 +64,7 @@ public partial class WindowMain : Window
 		this.Tabs.IsEnabled = true;
 	}
 
-	private void ButtonAuthClick(object sender, RoutedEventArgs e) => this.Auth();
+	private async void ButtonAuthClick(object sender, RoutedEventArgs e) => await this.Auth();
 
 	private void ButtonCloseClick(object sender, RoutedEventArgs e) => this.Close();
 
@@ -84,7 +87,7 @@ public partial class WindowMain : Window
 		}
 	}
 
-	private void ButtonDropClick(object sender, RoutedEventArgs e) => this.RefreshConnection();
+	private async void ButtonDropClick(object sender, RoutedEventArgs e) => await this.RefreshConnection();
 
 	private void DataGrid_Loaded(object sender, RoutedEventArgs e)
 	{
